@@ -30,15 +30,14 @@ function SideBar() {
                                 className="flex justify-start w-10 h-10 items-center"
                                 onClick={() => setIsCollapsed(!isCollapsed)}
                             >
-                                <img src={""} className="w-full h-full" />
                             </div>
-
                             <p
                                 className={`${isCollapsed ? "w-0" : "ms-3"
                                     } text-white font-bold overflow-hidden text-lg`}
                             >
-                                Triply
+                                Heart Hand
                             </p>
+
                         </div>
                     </Link>
 
@@ -46,8 +45,8 @@ function SideBar() {
                         <div
                             onClick={() => setCurrOption("dashboard")}
                             className={`${isCollapsed && currOption === "dashboard"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
+                                ? "bg-white text-primary rounded-lg py-1 px-1"
+                                : ""
                                 } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
                                 } flex justify-start mt-10 text-3xl items-center cursor-pointer py-3 ${currOption === "dashboard" && !isCollapsed
                                     ? "rounded-l-xl bg-white text-primary"
@@ -67,8 +66,8 @@ function SideBar() {
                         <div
                             onClick={() => setCurrOption("users")}
                             className={`${isCollapsed && currOption === "users"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
+                                ? "bg-white text-primary rounded-lg py-1 px-1"
+                                : ""
                                 } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
                                 } flex justify-start text-3xl items-center cursor-pointer text- py-3 ${currOption === "users" && !isCollapsed
                                     ? "rounded-l-xl bg-white text-primary"
@@ -109,180 +108,56 @@ function SideBar() {
               </p>
             </div>
           </Link> */}
-                    <Link to={"/auth/banners"}>
+                    <Link to={"/auth/donations"}>
                         <div
-                            onClick={() => setCurrOption("banners")}
-                            className={`${isCollapsed && currOption === "banners"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
+                            onClick={() => setCurrOption("donations")}
+                            className={`${isCollapsed && currOption === "donations"
+                                ? "bg-white text-primary rounded-lg py-1 px-1"
+                                : ""
                                 } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex justify-start cursor-pointer text-3xl items-center ext-white py-3 ${currOption === "banners" && !isCollapsed
+                                } flex justify-start cursor-pointer text-3xl items-center ext-white py-3 ${currOption === "donations" && !isCollapsed
                                     ? "rounded-l-xl bg-white text-primary"
                                     : ""
-                                } ${currOption !== "banners" ? "text-white" : ""}`}
+                                } ${currOption !== "donations" ? "text-white" : ""}`}
                         >
                             <FaRegImage className="font-bold" />
                             <p
                                 className={`${isCollapsed ? "w-0" : "ms-3"
                                     } font-old overflow-hidden text-base`}
                             >
-                                Banners
+                               Donations 
                             </p>
                         </div>
                     </Link>
-                    <Link to={"/auth/packages"}>
+                    <Link to={"/auth/ngos"}>
                         <div
-                            onClick={() => setCurrOption("packages")}
-                            className={`${isCollapsed && currOption === "packages"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
+                            onClick={() => setCurrOption("ngos")}
+                            className={`${isCollapsed && currOption === "ngos"
+                                ? "bg-white text-primary rounded-lg py-1 px-1"
+                                : ""
                                 } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "packages" && !isCollapsed
+                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "ngos" && !isCollapsed
                                     ? "rounded-l-xl bg-white text-primary"
                                     : ""
-                                } ${currOption !== "packages" ? "text-white" : ""}`}
-                        >
-                            <LuWallet />
-                            <p
-                                className={`${isCollapsed ? "w-0" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Packages
-                            </p>
-                        </div>
-                    </Link>
-                    <Link to={"/auth/trips"}>
-                        <div
-                            onClick={() => setCurrOption("trips")}
-                            className={`${isCollapsed && currOption === "trips"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "trips" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "trips" ? "text-white" : ""}`}
+                                } ${currOption !== "ngos" ? "text-white" : ""}`}
                         >
                             <BsTree />
                             <p
                                 className={`${isCollapsed ? "w-0" : "ms-3"
                                     } font-old overflow-hidden text-base`}
                             >
-                                Trips
+                               NGOs
                             </p>
                         </div>
                     </Link>
-                    <Link to={"/auth/hotel"}>
-                        <div
-                            onClick={() => setCurrOption("hotel")}
-                            className={`${isCollapsed && currOption === "hotel"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } cursor-pointer flex justify-start  text-3xl items-center text-whte py-3 ${currOption === "hotel" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "hotel" ? "text-white" : ""}`}
-                        >
-                            <LuCalendarDays />
-                            <p
-                                className={`${isCollapsed ? "w-0" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Hotel
-                            </p>
-                        </div>
-                    </Link>
-                    <Link to={"/auth/carRental"}>
-                        <div
-                            onClick={() => setCurrOption("cars")}
-                            className={`${isCollapsed && currOption === "cars"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                }cursor-pointer ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex justify-start text-3xl items-center txt-white py-3 ${currOption === "cars" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "cars" ? "text-white" : ""}`}
-                        >
-                            <ImFileText />
-                            <p
-                                className={`${isCollapsed ? "w-0 hidden" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Cars
-                            </p>
-                        </div>
-                    </Link>
-                    <Link to={"/auth/carbookings"}>
-                        <div
-                            onClick={() => setCurrOption("carbookings")}
-                            className={`${isCollapsed && currOption === "carbookings"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "carbookings" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "carbookings" ? "text-white" : ""}`}
-                        >
-                            <BsTree />
-                            <p
-                                className={`${isCollapsed ? "w-0" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Car Bookings
-                            </p>
-                        </div>
-                    </Link>
-                    <Link to={"/auth/testimonials"}>
-                        <div
-                            onClick={() => setCurrOption("testimonials")}
-                            className={`${isCollapsed && currOption === "testimonials"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "testimonials" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "testimonials" ? "text-white" : ""}`}
-                        >
-                            <MdRateReview />
-                            <p
-                                className={`${isCollapsed ? "w-0" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Testimonials
-                            </p>
-                        </div>
-                    </Link>
-                    <Link to={"/auth/destinations"}>
-                        <div
-                            onClick={() => setCurrOption("destinations")}
-                            className={`${isCollapsed && currOption === "destinations"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
-                                } ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
-                                } flex cursor-pointer justify-start  text-3xl items-center txt-white py-3 ${currOption === "destinations" && !isCollapsed
-                                    ? "rounded-l-xl bg-white text-primary"
-                                    : ""
-                                } ${currOption !== "destinations" ? "text-white" : ""}`}
-                        >
-                            <MdOutlineAreaChart />
-                            <p
-                                className={`${isCollapsed ? "w-0" : "ms-3"
-                                    } font-old overflow-hidden text-base`}
-                            >
-                                Destinations
-                            </p>
-                        </div>
-                    </Link>
+                    {
+                    /*
                     <Link to={"/auth/settings"}>
                         <div
                             onClick={() => setCurrOption("settings")}
                             className={`${isCollapsed && currOption === "settings"
-                                    ? "bg-white text-primary rounded-lg py-1 px-1"
-                                    : ""
+                                ? "bg-white text-primary rounded-lg py-1 px-1"
+                                : ""
                                 } cursor-pointer ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
                                 } flex justify-start text-3xl items-center tet-white py-3 ${currOption === "settings" && !isCollapsed
                                     ? "rounded-l-xl bg-white text-primary"
@@ -298,6 +173,8 @@ function SideBar() {
                             </p>
                         </div>
                     </Link>
+                     */
+                    }
                     <div
                         onClick={() => {
                             window.localStorage.removeItem("userData")
@@ -305,8 +182,8 @@ function SideBar() {
                             window.location.assign("/")
                         }}
                         className={`${isCollapsed && currOption === "logout"
-                                ? "bg-white text-primary rounded-lg py-1 px-1"
-                                : ""
+                            ? "bg-white text-primary rounded-lg py-1 px-1"
+                            : ""
                             } cursor-pointer ${isCollapsed ? "mx-3 flex justify-center" : "ms-5 ps-1"
                             } flex justify-start text-3xl items-center tet-white py-3 ${currOption === "logout" && !isCollapsed
                                 ? "rounded-l-xl bg-white text-primary"
@@ -318,25 +195,11 @@ function SideBar() {
                             className={`${isCollapsed ? "w-0" : "ms-3"
                                 } font-old overflow-hidden text-base`}
                         >
-                           Logout 
+                            Logout
                         </p>
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center bg-white rounded-lg mx-2 py-2">
-                    <div className="py-2">
-                        <FaMoon className="text-2xl" />
-                    </div>
-                    <div
-                        className={`${isCollapsed ? "w-0 hidden" : "w-full"
-                            } text-center  animate-width py-2 text-sm text-white bg-secondary rounded px-12`}
-                    >
-                        Dark Mode
-                    </div>
-                    <div className={`py-2 text-sm ${isCollapsed ? "w-0 hidden" : ""}`}>
-                        Light Mode
-                    </div>
-                </div>
             </div>
         </>
     );

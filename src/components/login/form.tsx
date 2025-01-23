@@ -1,113 +1,93 @@
-import { message } from "antd";
-import axios from "axios";
-import React, { useState } from "react";
-import { SERVER_URL } from "../../config";
-// import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useState } from "react"
+import { SERVER_URL } from "../../config"
+import { message } from "antd"
 
-const Form : React.FC = () => {
-  const [messageApi] = message.useMessage();
-  // const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+export default function Form() {
+    const [messageApi, contextHolder] = message.useMessage()
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const [data, setData] = useState({
+        email: "",
+        password: ""
+    })
 
-  const handleSubmit = async () => {
-    if (formData.password?.length < 1) {
-      messageApi.open({
-        type: "error",
-        content: "Password is required!",
-      });
-      return;
-    } else if (!formData.email) {
-      messageApi.open({
-        type: "error",
-        content: "Email can not be empty",
-      });
-      return;
+    const submit = async () => {
+        if (data.password?.length < 1) {
+            messageApi.open({
+                type: "error",
+                content: "Password is required!",
+            });
+            return;
+        } else if (!data.email) {
+            messageApi.open({
+                type: "error",
+                content: "Email can not be empty",
+            });
+            return;
+        }
+
+        try {
+            const response = await axios.post(`${SERVER_URL}/auth/admin/signin`, data)
+
+            window.localStorage.setItem(
+                "userData",
+                JSON.stringify(response?.data)
+            );
+            messageApi.open({
+                type: "success",
+                content: "Logged in successfully",
+            });
+            window.location.assign("/auth");
+        } catch (e) {
+            console.log(e)
+            messageApi.open({
+                type: 'error',
+                content: 'Incorrect email or password',
+            });
+        }
     }
-    
-    try {
-      const response = await axios.post(
-        SERVER_URL + "/auth/admin/signin",
-        formData
-      );
 
-      window.localStorage.setItem(
-        "userData",
-        JSON.stringify(response?.data)
-      );
-      console.log("yeah2", response?.data);
-      messageApi.open({
-        type: "success",
-        content: "Logged in successfully",
-      });
-      window.location.assign("/auth/dashboard");
-    } catch (error) {
-      messageApi.open({
-        type: "error",
-        content: "Ops! an error occured!",
-      });
-    }
-  };
 
-  return (
-    <div>
-      <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-        <div className="mb-4">
-          <label
-            className="block mb-2 text-sm font-bold text-gray-700"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <input
-            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-            id="email"
-            type="text"
-            placeholder="Email"
-            value={formData.email}
-            name="email"
-            onChange={(e) => handleChange(e)}
-          />
+    return (
+        <div className="bg-gray-50 font-[sans-serif]">
+            {contextHolder}
+            <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
+                <div className="max-w-md w-full">
+
+                    <div className="p-8 rounded-2xl bg-white shadow">
+                        <h2 className="text-gray-800 text-center text-2xl font-bold">Admin Sign in</h2>
+                        <div className="mt-8 space-y-4">
+                            <div>
+                                <label className="text-gray-800 text-sm mb-2 block">Email</label>
+                                <div className="relative flex items-center">
+                                    <input name="email" type="text" required className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter email" value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" className="w-4 h-4 absolute right-4" viewBox="0 0 24 24">
+                                        <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
+                                        <path d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z" data-original="#000000"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="text-gray-800 text-sm mb-2 block">Password</label>
+                                <div className="relative flex items-center">
+                                    <input name="password" type="password" required className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter password" value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })} />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" className="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128">
+                                        <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+
+                            <div className="!mt-8">
+                                <button onClick={submit} type="button" className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                                    Sign in
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="mb-4">
-          <label
-            className="block mb-2 text-sm font-bold text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-            id="password"
-            type="password"
-            name="password"
-            placeholder="******************"
-            value={formData.password}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className="mb-6 text-center">
-          <button
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleSubmit}
-          >
-            Sign In
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+    )
 }
-
-export default Form;
