@@ -6,7 +6,7 @@ import { Table } from "antd"
 const NGOs = () => {
 
     const [ngos, setNgos] = useState([])
-    const [total, setTotal] = useState([])
+    const [_, setTotal] = useState([])
 
     const getNgos = async () => {
         try {

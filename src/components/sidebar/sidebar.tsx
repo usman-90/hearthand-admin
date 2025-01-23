@@ -30,6 +30,7 @@ function SideBar() {
                                 className="flex justify-start w-10 h-10 items-center"
                                 onClick={() => setIsCollapsed(!isCollapsed)}
                             >
+                            <BsTree className="text-3xl text-white" />
                             </div>
                             <p
                                 className={`${isCollapsed ? "w-0" : "ms-3"

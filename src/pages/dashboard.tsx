@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Tag, Modal, Button, Table, DatePicker } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { Pie, Bar } from "react-chartjs-2";
+import React, { useEffect, useState } from "react";
+import { Tag, Modal, Table, DatePicker } from "antd";
+import { Pie } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     ArcElement,
@@ -11,6 +10,10 @@ import {
     LinearScale,
     BarElement,
 } from "chart.js";
+import axios from "axios";
+import { SERVER_URL } from "../config";
+import { FaArrowUp, FaRegUser } from "react-icons/fa";
+import { BsTree } from "react-icons/bs";
 
 ChartJS.register(
     ArcElement,
@@ -40,114 +43,106 @@ const Dashboard: React.FC = () => {
     const [selectedRequest, setSelectedRequest] =
         useState<DonationRequest | null>(null);
 
-    const [dashboardData, setDashboardData] = useState()
+    const [dashboardData, setDashboardData] = useState({})
 
-    const get_data = () => {
-            try{
-                
-            }
+
+    const [donations, setDonations] = useState([])
+
+    const getDonations = async () => {
+        try {
+            const res = await axios.get(`${SERVER_URL}/donation/get_all?page_no=${1}`)
+            setDonations(res.data?.donations?.slice(0, 5))
+        } catch (e) {
+
+        }
     }
-    const donationRequests: DonationRequest[] = [
-        {
-            id: 1,
-            donor: "John Doe",
-            items: "Clothes, Shoes",
-            address: "123 Main St.",
-            status: "Pending",
-            pickupDate: "Jan 25, 2025",
-        },
-        {
-            id: 2,
-            donor: "Jane Smith",
-            items: "Bags, Jackets",
-            address: "456 Maple Ave.",
-            status: "Delivered",
-            pickupDate: "Jan 20, 2025",
-        },
-        {
-            id: 3,
-            donor: "Alice Johnson",
-            items: "Books, Toys",
-            address: "789 Oak Blvd.",
-            status: "PickedUp",
-            pickupDate: "Jan 18, 2025",
-        },
-    ];
+
+
+    useEffect(() => {
+        getDonations()
+    }, [])
+
+
+
+    const get_data = async () => {
+        try {
+            const res = await axios.get(`${SERVER_URL}/ngo/get_admin_dashboard_data?month=${month}&year=${year}`)
+            setDashboardData(res.data)
+        } catch (e) {
+
+        }
+    }
+
+    useEffect(() => {
+        get_data()
+    }, [month, year])
 
     const pieData = {
-        labels: ["Pending", "Delivered", "PickedUp"],
+        labels: ["Total Donations", "Active Donations", "Completed Donations"],
         datasets: [
             {
-                data: [5, 7, 3],
+                //@ts-ignore
+                data: [dashboardData?.donation_data?.total_donation, dashboardData?.donation_data?.active_donations, dashboardData?.donation_data?.total_donations - dashboardData?.donation_data?.active_donations],
                 backgroundColor: ["#FFCD56", "#4CAF50", "#6A0B37"],
                 hoverBackgroundColor: ["#FFB74D", "#66BB6A", "#A3144E"],
             },
         ],
     };
+    console.log(pieData.datasets[0], "pieeeeeee", dashboardData)
 
-    const barData = {
-        labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ],
-        datasets: [
-            {
-                label: "Monthly Donations",
-                data: [30, 20, 40, 35, 50, 60, 55, 40, 65, 70, 45, 80],
-                backgroundColor: "#6A0B37",
-                borderColor: "#6A0B37",
-                borderWidth: 1,
-            },
-        ],
-    };
 
-    const columns: ColumnsType<DonationRequest> = [
-        { title: "Donor Name", dataIndex: "donor", key: "donor" },
-        { title: "Address", dataIndex: "address", key: "address" },
-        { title: "Items", dataIndex: "items", key: "items" },
-        { title: "Pickup Date", dataIndex: "pickupDate", key: "pickupDate" },
+    const columns = [
         {
-            title: "Actions",
-            key: "actions",
-            render: (_, record) => (
-                <div>
-                    <Button
-                        style={{
-                            backgroundColor: "#6A0B37",
-                            color: "#fff",
-                            marginRight: "8px",
-                        }}
-                        onClick={() => handleViewDetails(record)}
-                    >
-                        View Details
-                    </Button>
-                    <Button style={{ backgroundColor: "#FFCD56", color: "#fff" }}>
-                        Confirm
-                    </Button>
-                </div>
-            ),
+            title: 'User',
+            dataIndex: 'user',
+            key: 'user',
+            render: (user: any) => user?.name
+        },
+        {
+            title: 'Ngo',
+            dataIndex: 'selected_ngo',
+            key: 'selected_ngo',
+            render: (ngo: any) => ngo?.name
+        },
+        {
+            title: 'Donation Type',
+            dataIndex: 'donation_type',
+            key: 'donation_type',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+        },
+        {
+            title: 'Item Type',
+            dataIndex: 'item_type',
+            key: 'item_type',
+        },
+        {
+            title: 'Dates',
+            dataIndex: 'selected_range',
+            key: 'selected_range',
+        },
+        {
+            title: 'Created At',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at: string) => new Date(created_at).toLocaleDateString(),
         },
     ];
 
-    const handleViewDetails = (request: DonationRequest) => {
-        setSelectedRequest(request);
-        setIsModalVisible(true);
-    };
 
     const handleModalClose = () => {
         setIsModalVisible(false);
         setSelectedRequest(null);
     };
+    console.log(donations, "DONNN")
 
     return (
         <div
@@ -184,7 +179,12 @@ const Dashboard: React.FC = () => {
                         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                     }}
                 >
-                    <DatePicker onChange={(e, d) => console.log(e.$M, e.$y)} picker="month" />
+                    <DatePicker onChange={(e) => {
+                        // @ts-expect-error
+                        setYear(e.$y)
+                        // @ts-expect-error
+                        setMonth(e.$M)
+                    }} picker="month" />
                     <h3 style={{ color: "#6A0B37" }}>Donation Status</h3>
                     <Pie data={pieData} />
                 </div>
@@ -197,8 +197,48 @@ const Dashboard: React.FC = () => {
                         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                     }}
                 >
-                    <h3 style={{ color: "#6A0B37" }}>Monthly Donations</h3>
-                    <Bar data={barData} />
+                    <h3 style={{ color: "#6A0B37" }}>NGO's growth</h3>
+                    <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                            <BsTree className="text-3xl text-primary" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900"> Total NGOs</h3>
+                            {/*@ts-expect-error*/}
+                            <p className="text-2xl font-semibold text-gray-700">{dashboardData?.ngo_data?.total_ngos}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow-md my-4 rounded-lg p-6 flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                            <FaArrowUp className="text-3xl text-green-300" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900">NGOs joined this month</h3>
+                            {/*@ts-expect-error*/}
+                            <p className="text-2xl font-semibold text-gray-700">{dashboardData?.ngo_data?.this_month}</p>
+                        </div>
+                    </div>
+                    <h3 style={{ color: "#6A0B37" }}>User's growth</h3>
+                    <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                            <FaRegUser className="text-3xl text-primary" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900"> Total Users</h3>
+                            {/*@ts-expect-error*/}
+                            <p className="text-2xl font-semibold text-gray-700">{dashboardData?.user_data?.total_users}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow-md my-4 rounded-lg p-6 flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                            <FaArrowUp className="text-3xl text-green-300" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900">Users joined this month</h3>
+                            {/*@ts-expect-error*/}
+                            <p className="text-2xl font-semibold text-gray-700">{dashboardData?.user_data?.this_month}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -211,12 +251,10 @@ const Dashboard: React.FC = () => {
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                 }}
             >
-                <h3 style={{ color: "#6A0B37" }}>Donation Requests</h3>
+                <h3 style={{ color: "#6A0B37" }}>5 Recent Donation Requests</h3>
                 <Table
-                    dataSource={donationRequests}
+                    dataSource={donations}
                     columns={columns}
-                    rowKey="id"
-                    pagination={{ pageSize: 5 }}
                 />
             </div>
 

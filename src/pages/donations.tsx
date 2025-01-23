@@ -6,7 +6,7 @@ import { Table } from "antd"
 const Donations = () => {
 
     const [donations, setDonations] = useState([])
-    const [total, setTotal] = useState([])
+    const [_, setTotal] = useState([])
 
     const getDonations = async () => {
         try {

@@ -37,7 +37,7 @@ export default function Form() {
                 type: "success",
                 content: "Logged in successfully",
             });
-            window.location.assign("/auth");
+            window.location.assign("/auth/dashboard");
         } catch (e) {
             console.log(e)
             messageApi.open({

@@ -1,6 +1,5 @@
 import { TiUserOutline } from 'react-icons/ti';
 import { Avatar } from 'antd';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 const Header: React.FC = () => {
     let user = window.localStorage.getItem("userData")
     let jsonUser = null
@@ -18,16 +17,12 @@ const Header: React.FC = () => {
                     <Avatar shape="square" size={'large'} icon={<TiUserOutline />} />
                     <div className='flex flex-col mx-3'>
                         <p className='py-0 text-sm font-bold'>
-                      {jsonUser ? jsonUser?.name : "User"}      
+                            {jsonUser ? jsonUser?.name : "User"}
                         </p>
                         <p className='py-0 text-sm'>
-                            admin
+                            Admin
                         </p>
                     </div>
-                </div>
-
-                <div className='lg:mx-10 mx-2 shadow-2xl border rounded p-1'>
-                    <IoIosNotificationsOutline className='h-6 w-6' />
                 </div>
 
             </div>
