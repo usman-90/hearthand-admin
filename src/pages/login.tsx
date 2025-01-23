@@ -5,7 +5,7 @@ const Login = () => {
     const [_, contextHolder] = message.useMessage();
 
     return (
-        <div>
+        <div className="bg-primary">
             {contextHolder}
             <Form />
         </div>
